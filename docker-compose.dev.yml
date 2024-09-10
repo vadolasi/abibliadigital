@@ -4,41 +4,36 @@ services:
   abibliadigital:
     build: ./docker-api
     command: [ "bash", "/usr/src/api/start.sh" ]
-    ports:
-      - "3000:3000"
-    expose:
-      - "3000"
-    container_name: abibliadigital
     environment:
       - MONGODB_URI=mongodb://abibliadigital-mongo/abibliadigital
-      - NODE_ENV=development
-      - SECRET_KEY=19B2AFFC3B287A4E41FA7C1158A8A
+      - NODE_ENV=production
+      - SECRET_KEY=${SECRET_KEY}
       - REDIS_URL=redis://abibliadigital-redis
     volumes:
-      - ../abibliadigital:/usr/src/api
+      - abibliadigital:/usr/src/api
     depends_on:
       - abibliadigital-mongo
       - abibliadigital-redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.biblia-api.rule=Host(`biblia-api.vitordaniel.com`)"
+      - "traefik.http.routers.biblia-api.entrypoints=websecure"
+      - "traefik.http.services.biblia-api.loadbalancer.server.port=3000"
 
   abibliadigital-mongo:
     build: ./docker-mongo
-    container_name: abibliadigital-mongo
-    ports:
-      - "27017:27017"
-    expose:
-      - "27017"
     volumes:
-      - ../mongo-abibliadigital/db/data:/data/db
-      - ../mongo-abibliadigital/db/log:/var/log/mongodb
+      - mongo-abibliadigital-db-data:/data/db
+      - mongo-abibliadigital-db-log:/var/log/mongodb
 
   abibliadigital-redis:
     image: "redis:alpine"
-    container_name: abibliadigital-redis
     command: redis-server
-    ports:
-      - "6379:6379"
-    expose:
-      - "6379"
     restart: always
     volumes:
-      - ../redis-data:/var/lib/redis
+      - redis-data:/var/lib/redis
+
+volumes:
+  abibliadigital:
+  mongo-abibliadigital-db-data:
+  mongo-abibliadigital-db-log:
