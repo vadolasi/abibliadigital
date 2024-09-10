@@ -1,7 +1,6 @@
 services:
   abibliadigital:
     build: .
-    command: [ "bash", "/usr/src/api/start.sh" ]
     environment:
       - MONGODB_URI=mongodb://abibliadigital-mongo/abibliadigital
       - NODE_ENV=production
