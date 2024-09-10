@@ -7,7 +7,5 @@ WORKDIR /usr/src/api
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN yarn start
 
-# to add global yarn packages
-# RUN yarn global add ${PACKAGE}@${VERSION}
+CMD [ "yarn", "start" ]
