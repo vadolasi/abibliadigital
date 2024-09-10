@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   abibliadigital:
     build: ./docker-api
@@ -37,3 +35,4 @@ volumes:
   abibliadigital:
   mongo-abibliadigital-db-data:
   mongo-abibliadigital-db-log:
+  redis-data:
