@@ -1,6 +1,6 @@
 services:
   abibliadigital:
-    build: .
+    build: ./
     environment:
       - MONGODB_URI=mongodb://abibliadigital-mongo/abibliadigital
       - NODE_ENV=production
