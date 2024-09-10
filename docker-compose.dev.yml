@@ -1,14 +1,12 @@
 services:
   abibliadigital:
-    build: ./docker-api
+    build: .
     command: [ "bash", "/usr/src/api/start.sh" ]
     environment:
       - MONGODB_URI=mongodb://abibliadigital-mongo/abibliadigital
       - NODE_ENV=production
       - SECRET_KEY=${SECRET_KEY}
       - REDIS_URL=redis://abibliadigital-redis
-    volumes:
-      - ./:/usr/src/api
     depends_on:
       - abibliadigital-mongo
       - abibliadigital-redis
